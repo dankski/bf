@@ -1,4 +1,4 @@
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, PartialEq)]
 pub enum InstructionType {
     Inc,
     Dec,
@@ -10,7 +10,7 @@ pub enum InstructionType {
     JumpIfNotZero,
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, PartialEq)]
 pub struct Instruction {
     pub inst: InstructionType,
     pub argument: usize,

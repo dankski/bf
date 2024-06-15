@@ -71,3 +71,78 @@ impl Compiler {
       return self.instructions.len() - 1;
   }
 }
+
+#[cfg(test)]
+mod tests {
+  use super::*;
+
+  #[test]
+  fn should_return_compiled_program_01() {
+    let program_01 = String::from("+++[---[+]>>>]<<<");
+    let expected_instructions_01: Vec<Instruction> = vec![
+      Instruction{
+        inst: InstructionType::Inc, argument: 3,
+      },
+      Instruction{
+        inst: InstructionType::JumpIfZero, argument: 7,
+      },
+      Instruction{
+        inst: InstructionType::Dec, argument: 3,
+      },
+      Instruction{
+        inst: InstructionType::JumpIfZero, argument: 5,
+      },
+      Instruction{
+        inst: InstructionType::Inc, argument: 1,
+      },
+      Instruction{
+        inst: InstructionType::JumpIfNotZero, argument: 3,
+      },
+      Instruction{
+        inst: InstructionType::Right, argument: 3,
+      },
+      Instruction{
+        inst: InstructionType::JumpIfNotZero, argument: 1,
+      },
+      Instruction{
+        inst: InstructionType::Left, argument: 3,
+      },
+    ];
+
+    
+    let mut compiler = Compiler::new(program_01.as_str());
+    let actual_instructions_01 = compiler.compile();
+
+    assert_eq!(actual_instructions_01, expected_instructions_01);
+
+  }
+
+  #[test]
+  fn should_return_compiled_program_02() {
+    let program_02 = String::from("+++++-----+++++>>>>><<<<<");
+
+    let expected_instructions_02: Vec<Instruction> = vec![
+      Instruction{
+        inst: InstructionType::Inc, argument: 5,
+      },
+      Instruction{
+        inst: InstructionType::Dec, argument: 5,
+      },
+      Instruction{
+        inst: InstructionType::Inc, argument: 5,
+      },
+      Instruction{
+        inst: InstructionType::Right, argument: 5,
+      },
+      Instruction{
+        inst: InstructionType::Left, argument: 5,
+      },
+    ];
+
+    
+    let mut compiler = Compiler::new(program_02.as_str());
+    let actual_instructions_02 = compiler.compile();
+
+    assert_eq!(actual_instructions_02, expected_instructions_02);
+  }
+}
